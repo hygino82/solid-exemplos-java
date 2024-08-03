@@ -18,9 +18,11 @@ public class OcpDip {
                 new Item("SSD Kingston 512GB", 1, 360)
         );
 
-        final Venda venda = new Venda("Nerd", "PF", "Parana", itens);
-        final Caixa caixa = new Caixa();
-        final Venda vendaFaturada = caixa.faturar(venda);
+        final Venda venda = new Venda("Nerd", TipoCliente.PF, "Parana", itens);
+        final List<AcoesAposFaturamento> acoesAposFaturamento = List.of(new CorreioEletronico(), new EmissorNf(), new IntegraParaEstoque(), new SeparadorProdutos()
+        );
+        final Caixa caixa = new Caixa(acoesAposFaturamento);
+        final Venda vendaFaturada = caixa.faturar(venda, new TransportadoraPlimor(), new TabelaNormal());
         System.out.println("O desconto da venda é " + vendaFaturada.getDesconto());
         System.out.println("O frete da venda é " + vendaFaturada.getFrete());
     }

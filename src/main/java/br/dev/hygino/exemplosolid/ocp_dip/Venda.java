@@ -5,13 +5,13 @@ import java.util.List;
 public class Venda {
 
     private String cliente;
-    private String tipoCliente;
+    private TipoCliente tipoCliente;
     private String estadoEntrega;
     private List<Item> itens;
     private double frete;
     private double desconto;
 
-    public Venda(String cliente, String tipoCliente, String estadoEntrega, List<Item> itens) {
+    public Venda(String cliente, TipoCliente tipoCliente, String estadoEntrega, List<Item> itens) {
         this.cliente = cliente;
         this.tipoCliente = tipoCliente;
         this.estadoEntrega = estadoEntrega;
@@ -26,11 +26,11 @@ public class Venda {
         this.cliente = cliente;
     }
 
-    public String getTipoCliente() {
+    public TipoCliente getTipoCliente() {
         return tipoCliente;
     }
 
-    public void setTipoCliente(String tipoCliente) {
+    public void setTipoCliente(TipoCliente tipoCliente) {
         this.tipoCliente = tipoCliente;
     }
 
@@ -64,5 +64,11 @@ public class Venda {
 
     public void setDesconto(double desconto) {
         this.desconto = desconto;
+    }
+
+    public double getValorTotal() {
+        return this.itens.stream()
+                .mapToDouble(Item::valor)
+                .sum();
     }
 }

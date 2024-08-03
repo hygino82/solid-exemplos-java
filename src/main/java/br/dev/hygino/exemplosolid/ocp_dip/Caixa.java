@@ -1,42 +1,25 @@
 package br.dev.hygino.exemplosolid.ocp_dip;
 
-public class Caixa {
+import java.util.List;
 
-    private final Correio correio;
-    private final EmissorNf emissorNf;
-    private final IntegraParaEstoque integraParaEstoque;
-
-    public Caixa(Correio correio, EmissorNf emissorNf, IntegraParaEstoque integraParaEstoque) {
-        this.correio = correio;
-        this.emissorNf = emissorNf;
-        this.integraParaEstoque = integraParaEstoque;
+public final class Caixa {
+    
+    private final List<AcoesAposFaturamento> acoesAposFaturamento;
+    
+    public Caixa(List<AcoesAposFaturamento> acoesAposFaturamento) {
+        this.acoesAposFaturamento = acoesAposFaturamento;
     }
-
-    Venda faturar(Venda venda) {
+    
+    public Venda faturar(Venda venda, Transportadora transportadora, TabelaDescontos tabelaDescontos) {
         //calculo frete
-        if (venda.getEstadoEntrega().equalsIgnoreCase("Parana")) {
-            venda.setFrete(25);
-        } else {
-            venda.setFrete(25);
-        }
+        venda.setFrete(transportadora.calcularFrete(venda));
 
         //calculo descontro
-        if (venda.getTipoCliente().equalsIgnoreCase("PF")) {
-            venda.setDesconto(venda.getValorTotal() * 0.1);
-        } else if (venda.getTipoCliente().equalsIgnoreCase("PJ")) {
-            venda.setDesconto(venda.getValorTotal() * 0.05);
-        } else {
-            venda.setDesconto(venda.getValorTotal() * 0.02);
-        }
-
+        venda.setDesconto(tabelaDescontos.calcularDesconto(venda));
+        
         System.out.println("Fatura faturada!");
-        this.emissorNf.emitir();
-        //emite a nota fiscal
-        this.correio.notificarCliente();
-        //dispara um e-mail ao cliente
-        this.integraParaEstoque.integrar();
-        //da baixa nos itens do estoque 
-
+        this.acoesAposFaturamento.forEach(acao -> acao.executar(venda));
+        
         return venda;
     }
 }

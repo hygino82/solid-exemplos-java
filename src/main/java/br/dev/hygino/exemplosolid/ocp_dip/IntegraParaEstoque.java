@@ -1,8 +1,10 @@
 package br.dev.hygino.exemplosolid.ocp_dip;
 
-public class IntegraParaEstoque {
+public class IntegraParaEstoque implements AcoesAposFaturamento {
 
-    public void integrar() {
+    @Override
+    public void executar(Venda venda) {
+
         System.out.println("Item integrado ...");
     }
 }
