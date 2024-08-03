@@ -10,13 +10,15 @@ public class Isp {
     }
 
     private void executa() {
-        final var analista = new Analista("Jose", "123", 1000);
-        final var vendedor = new Vendedor("Manuel", "321", 1000);
+        final var jose = new Analista("Jose", "123", 1000);
+        final var manuel = new Vendedor("Manuel", "321", 1500);
+        final var juca = new Vendedor("Juca", "999", 1700);
+        final var maria = new Cozinheira("Maria", "456", 2500);
 
-        List<Colaborador> colaboradores = List.of(analista, vendedor);
+        List<Comissionavel> colaboradores = List.of(manuel, juca);
 
         colaboradores.forEach(colaborador -> {
-            System.out.printf("A commisao de %s e de %f", colaborador.getNome(), colaborador.getComissao()).println();
+            System.out.printf("Commisao e de %s", colaborador.getComissao()).println();
         });
     }
 }

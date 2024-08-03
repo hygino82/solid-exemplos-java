@@ -23,6 +23,4 @@ public abstract class Colaborador {
     public double getSalario() {
         return salario;
     }
-
-    public abstract double getComissao();
 }
